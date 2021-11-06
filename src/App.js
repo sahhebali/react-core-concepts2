@@ -6,13 +6,51 @@ import reactDom from 'react-dom';
 function App() {
   return (
     <div className="App">
-      <UserPost></UserPost>
 
+      <Todos></Todos>
     </div>
   );
 }
 
-function UserPost() {
+function Todos() {
+  const [todos, setTodos] = useState([]);
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/todos')
+      .then(res => res.json())
+      .then(data => setTodos(data))
+  }, [])
+  return (
+    <div>
+      <h1>Todos : </h1>
+      {
+        todos.map(todos => <UsersTodos title={todos.title} userId={todos.userId} id={todos.id} completed={todos.completed}></UsersTodos>)
+      }
+    </div>
+  )
+}
+
+
+function UsersTodos(props) {
+  return (
+    <div className="product">
+      <h1> userId :{props.userId}</h1>
+      <h3> id :{props.id}</h3>
+      <p>Title : {props.title}</p>
+      <h4>completed :{props.completed}</h4>
+    </div>
+
+
+  )
+}
+
+
+
+
+
+
+
+
+/* function UserPost() {
   const [user, setUserPost] = useState([]);
   useEffect(() => {
     fetch('http://jsonplaceholder.typicode.com/posts')
@@ -23,7 +61,7 @@ function UserPost() {
     <div>
       <div>External Post</div>
       {
-        user.map(user => <Users title={user.title}></Users>)
+        user.map(user => <Users title={user.title} id={user.id}></Users>)
       }
 
     </div>
@@ -32,29 +70,15 @@ function UserPost() {
 
 function Users(props) {
   return (
-    <div>
-      <p>title :{props.title}</p>
+    <div style={{ backgroundColor: 'lightgreen', color: 'red', margin: '10px', border: '3px solid blue', borderRadius: '10px' }}>
+      <h2>Title : {props.title}</h2>
+      <h4>{props.id}</h4>
     </div>
   )
-}
+} */
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-export default App;
 /* amar pracktice */
 /* function ExternalUser() {
   const [user, setUser] = useState([]);
@@ -147,3 +171,5 @@ function User(props) {
     </div>
   )
 } */
+
+export default App;
